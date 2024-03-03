@@ -1,4 +1,3 @@
-
 import { lockPage, unlockPage } from 'Models/locker';
 
 export default element => {

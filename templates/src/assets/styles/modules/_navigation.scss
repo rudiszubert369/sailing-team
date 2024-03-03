@@ -7,7 +7,7 @@
 	left: 0;
 	width: 100%;
 	z-index: $z-index-navigation;
-	border-bottom: 1px solid $color-light;
+	border-bottom: 0.5px solid $color-light;
 	transition: background 300ms $ease-out-quad;
 
 	&.is-mobile-navigation-open {

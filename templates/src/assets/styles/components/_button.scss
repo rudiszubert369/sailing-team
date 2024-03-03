@@ -111,7 +111,7 @@
 		&--default {
 			font-size: $font-size-base;
 			line-height: 1;
-			padding: $spacing-05 $spacing-08;
+			padding: $spacing-05-05 $spacing-08-125;
 			&.has-preloader {
 				padding-right: 48px;
 			}
@@ -192,8 +192,16 @@
 			&--right {
 				order: 3;
 				margin-right: calc(-#{$spacing-05} / 2);
-				margin-left: $spacing-04;
+				margin-left: $spacing-05;
 			}
 		}
+	}
+
+	.navigation__button &__label {
+		font-weight: 700;
+	}
+
+	.team__button {
+		
 	}
 }

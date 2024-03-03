@@ -31,13 +31,13 @@ p {
 /*
 	main headline styles
 */
-@mixin headline-styles {
-	font-weight: $font-weight-extra-bold;
-	text-transform: uppercase
+@mixin headline-styles($weight: $font-weight-bold) {
+	font-weight: $weight;
+	text-transform: uppercase;
 }
 
 @mixin h1 {
-	@include headline-styles;
+	@include headline-styles($font-weight-extra-bold);
 	font-size: 52px;
 	line-height: 1.2;
 	@include mq(tablet) {
@@ -49,7 +49,7 @@ p {
 }
 
 @mixin h2 {
-	@include headline-styles;
+	@include headline-styles($font-weight-extra-bold);
 	font-size: 36px;
 	line-height: 1.2;
 	@include mq(tablet) {

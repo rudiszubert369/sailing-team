@@ -58,7 +58,7 @@ include($root_path . '/partials/head.php');
 		<div class="hero__inner container">
 			<div class="hero__inner__content">
 				<?php echo generate_component_headline([
-					'label' => 'This is my headline',
+					'label' => 'This is headline',
 					'tag' => 'h1',
 					'tag_class' => 'h1',
 					'class' => 'hero__headline color-light'
@@ -72,19 +72,25 @@ include($root_path . '/partials/head.php');
 			<?php for($i = 0; $i < 3; $i++) {
 				$style = null;
 				$illustration = null;
+				$text = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
+
 				if($i == 1) $style = 'black';
-				if($i == 2) $illustration = '/assets/images/map.svg';
+				if ($i == 2) {
+					$illustration = '/assets/images/map.svg';
+					$text .= ' Tempus massa est scelerisque penatibus.';
+				}
+
 				echo generate_component_teaser([
 					'style' => $style,
 					'illustration' => $illustration,
-					'uptitle' => '0' . $i + 1 . ' Mai',
+					'uptitle' => '17 Mai',
 					'headline' => [
-						'label' => 'My teaser title',
+						'label' => 'Headline beitrag 2021',
 						'tag' => 'h2',
 						'tag_class' => $i < 2 ? 'h5' : 'h3',
 					],
 					'subtitle' => 'Subtitle',
-					'text' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+					'text' => $text,
 				]);
 			} ?>
 		</div>
@@ -96,22 +102,22 @@ include($root_path . '/partials/head.php');
 		<div class="text-content__inner">
 			<div class="text-content__top">
 				<?php echo generate_component_headline([
-					'label' => 'This is my headline',
+					'label' => 'This is headline',
 					'tag' => 'h2',
 					'tag_class' => 'h2',
 					'class' => 'text-content__headline'
 				]); ?>
 				<?php echo generate_component_headline([
 					'label' => 'Subtitle goes here',
-					'tag' => 'div',
+					'tag' => 'h5',
 					'tag_class' => 'h5',
 					'class' => 'text-content__subtitle'
 				]); ?>
 			</div>
-			<div class="text-content__text copy">
-				Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+			<p class="text-content__text copy">
+				Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</br>
 				Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. 
-			</div>
+			</p>
 		</div>
 	</div>
 </section>
@@ -133,5 +139,16 @@ include($root_path . '/partials/head.php');
 		</div>
 	</div>
 </section>
+
+<section class="team">
+	<?php echo generate_component_button([
+		'label' => 'Load more',
+		'class' => 'team__button',
+	]) ?>
+</section>
+
+<footer class="footer">
+
+</footer>
 
 <?php include($root_path . '/partials/foot.php'); ?>  
