@@ -1,6 +1,7 @@
 <?php 
 $root_path = $_SERVER['DOCUMENT_ROOT'];
-include($root_path . '/partials/head.php'); 
+include($root_path . '/partials/head.php');
+include($root_path . '/generators/modules/team.php');
 ?>
 
 <nav class="navigation" data-component='{ "component": "navigation" }'>
@@ -140,12 +141,12 @@ include($root_path . '/partials/head.php');
 	</div>
 </section>
 
-<section class="team">
-	<?php echo generate_component_button([
-		'label' => 'Load more',
-		'class' => 'team__button',
-	]) ?>
-</section>
+<?php
+	$module_config = [
+		'url' => 'https://challenge-api.view.agentur-loop.com/api/',
+	];
+	echo generate_module_team($module_config);
+?>
 
 <footer class="footer">
 

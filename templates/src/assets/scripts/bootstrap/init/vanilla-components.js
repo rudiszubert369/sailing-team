@@ -4,6 +4,7 @@ import * as VanillaFactory from 'Models/utils/vanilla-factory';
 // Define async components
 const asyncComponents = [
 	'navigation',
+	'load-content',
 ];
 
 // Register async components

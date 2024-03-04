@@ -1,6 +1,9 @@
-export async function call (url, method = 'POST', data = false, convertDataToJSON = true) {
+export async function call (url, method = 'POST', additionalHeaders = {}, data = false, convertDataToJSON = true) {
 	const options = {
 		method,
+		headers: {
+			...additionalHeaders,
+		},
 	};
 	if (method === 'POST' && data !== false) {
 		if (convertDataToJSON) {
