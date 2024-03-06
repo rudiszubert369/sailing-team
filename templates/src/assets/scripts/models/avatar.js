@@ -29,32 +29,35 @@ function renderAvatar (avatar, containerElement) {
 	const avatarElement = document.createElement('div');
 	avatarElement.classList.add('avatar');
 
+	const photoDiv = document.createElement('div');
+	photoDiv.classList.add('avatar__photo');
+
 	const imageEl = generateImage({
 		alt: `Crew Member - ${avatar.name}`,
-		class: 'crew__avatar__image',
+		class: 'avatar__photo__image',
 		sources: [{
 			src: avatar.image,
 			width: 810,
 		}],
 	});
 
-	avatarElement.appendChild(imageEl);
+	photoDiv.appendChild(imageEl);
+	avatarElement.appendChild(photoDiv);
 
-	const detailsDiv = document.createElement('div');
-	detailsDiv.classList.add('avatar__details');
-	detailsDiv.setAttribute('data-duty', avatar.duty_slugs.join(', ')); // assuming you want to show combined roles
+	const infoDiv = document.createElement('div');
+	infoDiv.classList.add('avatar__info');
 
 	const nameH3 = document.createElement('h3');
-	nameH3.classList.add('avatar__name');
+	nameH3.classList.add('avatar__info__name');
 	nameH3.textContent = avatar.name;
-	detailsDiv.appendChild(nameH3);
+	infoDiv.appendChild(nameH3);
 
 	const dutiesP = document.createElement('p');
-	dutiesP.classList.add('avatar__duties');
+	dutiesP.classList.add('avatar__info__duties');
 	dutiesP.textContent = avatar.duties;
-	detailsDiv.appendChild(dutiesP);
+	infoDiv.appendChild(dutiesP);
 
-	avatarElement.appendChild(detailsDiv);
+	avatarElement.appendChild(infoDiv);
 
 	containerElement.appendChild(avatarElement);
 }

@@ -5,6 +5,7 @@ import * as VanillaFactory from 'Models/utils/vanilla-factory';
 const asyncComponents = [
 	'navigation',
 	'load-content',
+	'grid-column-control',
 ];
 
 // Register async components

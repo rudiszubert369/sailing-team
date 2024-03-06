@@ -1,3 +1,21 @@
 .team {
+	&__filter-control{
+		.button {
+			color: $color-text-light;
+		}
 
+		.button--active  {
+			color: $color-text-primary;
+		}
+	}
+
+	&__grid-control{
+		.button {
+
+		}
+
+		.button--active  {
+			border-bottom: 2px solid $color-primary;
+		}
+	}
 }
