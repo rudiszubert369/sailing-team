@@ -4,6 +4,7 @@ $buttons = [
     [
         'label' => 'Button Label',
         'active' => false,
+		'mobile_only' => false, //mobile only
     ], //Repeat for each button you need in the group
 ];
 */
@@ -21,8 +22,10 @@ if(!function_exists('generate_component_toggle_button_group')){
                     'style' => 'link',
 					'tag' => 'button',
                     'label' => $button['label'],
-					'class' => 'js-load-content__button--toggle' . ($button['active'] ? ' button--active' : ''),
-                    'icon_right' => true,
+					'class' => 'js-load-content__button--toggle' . 
+								($button['active'] ? ' button--active' : '') . 
+								($button['mobile_only'] ? ' button--mobile' : ''),
+					'icon_right' => true,
                 ]); ?>
             <?php endforeach; ?>
         </div>

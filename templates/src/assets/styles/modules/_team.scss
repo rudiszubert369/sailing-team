@@ -1,21 +1,46 @@
 .team {
-	&__filter-control{
+	&__button-group--filter-control{
 		.button {
 			color: $color-text-light;
-		}
-
-		.button--active  {
-			color: $color-text-primary;
+	  
+			&--active {
+			  color: $color-text-primary;
+			}
 		}
 	}
 
-	&__grid-control{
+	&__button-group--grid-control{
 		.button {
+			&--active {
+				border-bottom: 2px solid $color-primary;
+			}
 
-		}
+			@include mq($until: tablet) {
+				display: none;
+			}
 
-		.button--active  {
-			border-bottom: 2px solid $color-primary;
+			&--mobile {
+				color:red;
+				display: none;
+
+				@include mq($until: tablet) {
+					display: inline-block;
+				}
+			}
 		}
 	}
+
+	&__results {
+		display: grid;
+	
+		&__grid {
+			display: grid;
+		  
+			@for $i from 1 through 6 {
+				&--#{$i} { 
+				grid-template-columns: repeat($i, 1fr); 
+				}
+			}
+		}
+	}	
 }

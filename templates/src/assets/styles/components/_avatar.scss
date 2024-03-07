@@ -1,3 +1,45 @@
 .avatar {
-	
+	position: relative;
+
+	&:hover &__info {
+        z-index: 2;
+		opacity: 1;
+		background-color: $color-light;
+		left: 100%;
+    }
+
+    .last-element:hover &__info {
+		left: -100%;
+	}
+
+	&:hover &__photo {
+		z-index: 3;
+		-webkit-filter: none;
+		filter: none;
+	}
+
+	&__photo {
+		position: relative;
+		height: 100%;
+		z-index: 1;
+		-webkit-filter: grayscale(100%);
+		filter: grayscale(100%);
+
+		&__image{
+			width: 100%;
+			object-fit: cover;
+			height: 100%;
+		}
+	}
+
+	&__info {
+		position: absolute;
+		height: 100%;
+		width: 100%;
+		top: 0;
+		left: 0;
+		opacity: 0;
+		transition: 0.7s all;
+		pointer-events: none;
+	}
 }
