@@ -2,7 +2,7 @@
 	$block: &;
 
 	display: block;
-	position: absolute;
+	position: fixed;
 	top: 0;
 	left: 0;
 	width: 100%;
@@ -23,6 +23,7 @@
 		align-items: center;
 		height: var(--navigation-height, 80px);
 		gap: $spacing-05;
+		margin-bottom: -0.5px;
 
 		@include mq(tablet-landscape) {
 			--navigation-height: 95px;

@@ -25,7 +25,6 @@ if(!function_exists('generate_component_toggle_button_group')){
 					'class' => 'js-load-content__button--toggle' . 
 								($button['active'] ? ' button--active' : '') . 
 								($button['mobile_only'] ? ' button--mobile' : ''),
-					'icon_right' => true,
                 ]); ?>
             <?php endforeach; ?>
         </div>

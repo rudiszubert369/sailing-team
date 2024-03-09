@@ -43,7 +43,7 @@
 		&--primary-white {
 			background-color: $color-light;
 			border: 1px solid transparent;
-			color: $color-text-primary;
+			color: $color-text-dark;
 
 			.no-touch &:hover {
 				background-color: rgba($color-light, 0.8);

@@ -36,34 +36,39 @@ if(!function_exists('generate_module_team')){
 		?>
 
 		<section class="team" data-component='{"component": "load-content"}' data-url="<?= $url; ?>">
-			<?php echo generate_component_headline([
-					'label' => 'Unser team',
-					'tag' => 'h2',
-					'tag_class' => 'h2',
-					'class' => 'team__headline'
-				]); ?>
-			<?php echo generate_component_headline([
-				'label' => 'Subtitle goes here',
-				'tag' => 'h5',
-				'tag_class' => 'h5',
-				'class' => 'team__subtitle'
-			]); ?>
-			<div class="team__content" data-component='{"component": "grid-column-control"}'>
-				<div class="team__button-group--filter-control js-load-data__button-group">
-					<?php echo generate_component_toggle_button_group($buttons_filters) ?>
+			<div class="team__inner" data-component='{"component": "grid-column-control"}'>
+				<div class="container team__top">
+					<div>
+						<?php echo generate_component_headline([
+								'label' => 'Unser team',
+								'tag' => 'h2',
+								'tag_class' => 'h2',
+								'class' => 'team__headline color-light'
+							]); ?>
+						<?php echo generate_component_headline([
+							'label' => 'Subtitle goes here',
+							'tag' => 'h5',
+							'tag_class' => 'h5',
+							'class' => 'team__subtitle color-light'
+						]); ?>
+					</div>
+					<div class="team__button-group--filter-control js-load-data__button-group">
+						<?php echo generate_component_toggle_button_group($buttons_filters) ?>
+					</div>
 				</div>
-
-				<div class="team__results">
+				<div class="container container--hd container--no-padding">
 					<div class="js-load-content__result team__results__grid team__results__grid--5"></div>
+					<div class="team__button-group--grid-control js-grid-column-control__button-group">
+						<?php echo generate_component_toggle_button_group($buttons_grid_options) ?>
+					</div>
+					<div class="team__button-container">
+						<?php echo generate_component_button([
+							'label' => 'Load more',
+							'class' => 'js-load-content__button--load-more',
+							'style' => 'primary-white',
+						]) ?>
+					</div>
 				</div>
-				
-				<div class="team__button-group--grid-control js-grid-column-control__button-group">
-					<?php echo generate_component_toggle_button_group($buttons_grid_options) ?>
-				</div>
-				<?php echo generate_component_button([
-					'label' => 'Load more',
-					'class' => 'js-load-content__button--load-more',
-				]) ?>
 			</div>
 		</section>
 

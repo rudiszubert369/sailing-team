@@ -28,6 +28,10 @@
 		}
 	}
 
+	&--no-padding {
+		padding: 0;
+	}
+
 	&__indent {
 		margin: 0 auto;
 		@include mq(tablet) {

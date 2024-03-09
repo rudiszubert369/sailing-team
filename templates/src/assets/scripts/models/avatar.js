@@ -47,8 +47,8 @@ function renderAvatar (avatar, containerElement) {
 	const infoDiv = document.createElement('div');
 	infoDiv.classList.add('avatar__info');
 
-	const nameH3 = document.createElement('h3');
-	nameH3.classList.add('avatar__info__name');
+	const nameH3 = document.createElement('h5');
+	nameH3.classList.add('avatar__info__name', 'h5');
 	nameH3.textContent = avatar.name;
 	infoDiv.appendChild(nameH3);
 

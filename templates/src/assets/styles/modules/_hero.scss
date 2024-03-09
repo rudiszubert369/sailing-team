@@ -2,15 +2,25 @@
 	$block: &;
 
 	overflow: hidden;
+	background: linear-gradient(90deg, $color-light-grey 0%, $color-light-grey 50%, $color-light 50%, $color-light 100%);
+
+	@include mq(mobile) {
+		background: linear-gradient(90deg, $color-light-grey 0%, $color-light-grey 50%, $color-light-grey 50%, $color-light-grey 100%);
+	}
+
+	// @include mq(tablet) {
+	// 	background: linear-gradient(90deg, $color-light-grey 100%, $color-light-grey 50%, $color-light 50%, $color-light 100%);
+	// }
 
 	&__main {
 		position: relative;
 		z-index: 2;
-		min-height: 80vh;
+		min-height: 118vh;
 		padding: 80px 0;
 		display: flex;
 		align-items: center;
-
+		padding: 140px 0;
+		clip-path: polygon(100% 0, 100% 85%, 50% 100%, 0 85%, 0 0);
 		@include mq(tablet) {
 			padding: 120px 0;
 		}
@@ -80,6 +90,10 @@
 
 			&:last-child {
 				grid-column: span 2;
+			}
+
+			&__text {
+				max-width: 400px;
 			}
 		}
 	}

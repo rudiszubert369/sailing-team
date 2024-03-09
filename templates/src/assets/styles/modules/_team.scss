@@ -1,7 +1,31 @@
 .team {
+	background-color: $color-dark;
+
+	padding: 100px 0;
+
+	@include mq(tablet) {
+		padding: 120px 0;
+	}
+
+	@include mq(desktop) {
+		padding: 180px 0;
+	}
+
+	&__top {
+		display: flex;
+		justify-content: space-between;
+	}
+
+	&__headline {
+		margin-bottom: $spacing-04;
+	}
+
 	&__button-group--filter-control{
+		align-self: flex-end;
+
 		.button {
 			color: $color-text-light;
+			padding-left: 29px!important;
 	  
 			&--active {
 			  color: $color-text-primary;
@@ -9,13 +33,26 @@
 		}
 	}
 
-	&__button-group--grid-control{
+	&__button-group--grid-control {
+		display: flex;
+		justify-content: flex-end;
+		margin-top: 15px;
+		margin-bottom: 30px;
+		padding-right: 15px;
+
 		.button {
+			padding: 10px!important;
+			color: $color-text-light;
+
+			&__label {
+				border: none;
+			}
+
 			&--active {
 				border-bottom: 2px solid $color-primary;
 			}
 
-			@include mq($until: tablet) {
+			@include mq($until: tablet-landscape) {
 				display: none;
 			}
 
@@ -23,7 +60,7 @@
 				color:red;
 				display: none;
 
-				@include mq($until: tablet) {
+				@include mq($until: tablet-landscape) {
 					display: inline-block;
 				}
 			}
@@ -31,9 +68,8 @@
 	}
 
 	&__results {
-		display: grid;
-	
 		&__grid {
+			margin-top: 130px;
 			display: grid;
 		  
 			@for $i from 1 through 6 {
@@ -42,5 +78,10 @@
 				}
 			}
 		}
-	}	
+	}
+
+	&__button-container {
+		display: flex;
+		justify-content: center;
+	}
 }

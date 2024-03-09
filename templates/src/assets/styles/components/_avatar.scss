@@ -41,5 +41,15 @@
 		opacity: 0;
 		transition: 0.7s all;
 		pointer-events: none;
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-end;
+		padding: 25px;
+
+		&__name {
+			color: $color-text-primary;
+			text-transform: uppercase;
+			padding-bottom: 20px;
+		}
 	}
 }
