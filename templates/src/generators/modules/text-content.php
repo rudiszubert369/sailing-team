@@ -7,7 +7,7 @@ if(!function_exists('generate_module_text_content')){
 		//Template
 		?>
 
-		<section class="text-content">
+		<section class="text-content" id="about">
 			<div class="container">
 				<div class="text-content__inner">
 					<div class="text-content__top">

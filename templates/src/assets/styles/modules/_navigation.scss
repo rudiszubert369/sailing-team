@@ -17,6 +17,11 @@
 		}
 	}
 
+	&--blur {
+		backdrop-filter: blur(12px);
+		background-color: rgba(0, 0, 0, 0.3); 
+	}
+
 	&__inner {
 		--navigation-height: 70px;
 		display: flex;
@@ -95,6 +100,7 @@
 	}
 
 	&__button {
+		font-weight: $font-weight-bold;
 		@include mq($until: tablet-landscape) {
 			width: 100%;
 			margin-top: auto;

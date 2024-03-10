@@ -15,6 +15,15 @@ export default element => {
 
 	function addListeners () {
 		elements.mobileToggle.addEventListener('click', mobileToggleClickHandler);
+		window.addEventListener('scroll', scrollHandler);
+	}
+
+	function scrollHandler () {
+		if (window.scrollY > 20) {
+			element.classList.add('navigation--blur');
+		} else {
+			element.classList.remove('navigation--blur');
+		}
 	}
 
 	function mobileToggleClickHandler () {

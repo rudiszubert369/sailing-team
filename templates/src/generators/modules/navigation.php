@@ -17,13 +17,13 @@ if(!function_exists('generate_module_navigation')){
 					<div class="navigation__main">
 						<ul class="navigation__links">
 							<li>
-								<a class="navigation__links__item label color-light" href="#">About us</a>
+								<a class="navigation__links__item label color-light" href="#about">About us</a>
 							</li>
 							<li>
 								<a class="navigation__links__item label color-light" href="#">Gallery</a>
 							</li>
 							<li>
-								<a class="navigation__links__item label color-light" href="#">Crew</a>
+								<a class="navigation__links__item label color-light" href="#crew">Crew</a>
 							</li>
 						</ul>
 						
@@ -33,6 +33,7 @@ if(!function_exists('generate_module_navigation')){
 							'icon' => 'arrow-right',
 							'icon_type' => 'symbol',
 							'icon_right' => true,
+							'href' => '#contact',
 						]) ?>
 					</div>
 

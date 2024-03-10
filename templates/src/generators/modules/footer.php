@@ -5,20 +5,20 @@ if(!function_exists('generate_module_footer')){
 		ob_start();
 
 		$links = [
-			['label' => 'About us', 'href'=> '#'],
+			['label' => 'About us', 'href'=> '#about'],
 			['label' => 'Impressum', 'href'=> '#'],
 			['label' => 'Gallery', 'href'=> '#'],
 			['label' => 'Datenschutz', 'href'=> '#'],
-			['label' => 'Crew', 'href'=> '#'],
+			['label' => 'Crew', 'href'=> '#crew'],
 			['label' => 'Rechtliches', 'href'=> '#'],
-			['label' => 'Contact', 'href'=> '#'],
+			['label' => 'Contact', 'href'=> '#contact'],
 			['label' => 'Copyright', 'href'=> '#'],
         ];
 
 		//Template
 		?>
 
-		<footer class="footer">
+		<footer class="footer" id="contact">
 			<div class="footer__logo-container">
 				<a href="#" class="footer__logo-container__logo">
 					<img class="footer__logo-container__logo__image" src="/assets/images/logo.svg" alt="Segelteam logo">

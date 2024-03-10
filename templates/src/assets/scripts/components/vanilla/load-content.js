@@ -31,20 +31,20 @@ export function clearResults (element) {
 }
 
 export default function loadContent (element) {
-	const baseUrl = element.dataset.url || ''; // Default to empty string because optimism
+	const baseUrl = element.dataset.url || '';
 
 	const elements = {
-		buttonEl: element.querySelector('.js-load-content__button--load-more'),
-		toggleButtons: element.querySelectorAll('.js-load-data__button-group .button'),
+		buttonEl: element.querySelector('.js-load-content__button__load-more'),
+		toggleButtons: element.querySelectorAll('.js-load-content__button-group .button'),
 		resultEl: element.querySelector('.js-load-content__result'),
 	};
 
 	const states = {
-		buttonActive: 'button--active', // When you feel special but you're just a class
+		buttonActive: 'button--active',
 	};
 
 	async function init () {
-		console.log('loadContent init', element); // Logging, because we care about your console
+		console.log('loadContent init', element);
 		await loadAndDisplayData();
 		addListeners();
 	}
@@ -65,7 +65,7 @@ export default function loadContent (element) {
 			}
 			this.classList.toggle(states.buttonActive);
 
-			elements.resultEl.innerHTML = ''; // Fresh start because we believe in second chances
+			elements.resultEl.innerHTML = '';
 
 			currentFilter = buttonCategory;
 			currentPage = 1;
@@ -82,26 +82,33 @@ export default function loadContent (element) {
 	}
 
 	async function loadAndDisplayData () {
-		showPreloader(elements.buttonEl, { color: 'white' }); // Fancy loading because we can
+		showPreloader(elements.buttonEl, { color: 'white' });
 		try {
 			const response = await fetchData(baseUrl, currentPage, limit, currentFilter);
-			console.log(response); // For the curious souls
+			console.log(response);
 			if (response.data && response.data.data.length > 0) {
 				generateAvatars(response.data.data, elements.resultEl);
 				markLastElement(elements.resultEl);
-
 				if (response.data.data.length < limit) {
-					elements.buttonEl.style.display = 'none'; // Hide because we're out of stuff
+					elements.buttonEl.style.display = 'none';
 				}
 			} else {
-				elements.buttonEl.style.display = 'none'; // Hide because we're definitely out of stuff
+				elements.buttonEl.style.display = 'none';
 			}
 		} catch (error) {
-			console.error('Oops, something went wrong with fetching data:', error);
-			elements.buttonEl.style.display = 'none'; // Hide because errors are shy
+			handleError(elements.resultEl);
 		} finally {
-			hidePreloader(elements.buttonEl); // Because all good things must come to an end
+			hidePreloader(elements.buttonEl);
 		}
+	}
+
+	function handleError (parentEl) {
+		const errorDiv = document.createElement('div');
+		errorDiv.className = 'team__results--error';
+		errorDiv.textContent = 'Something went wrong ;( try reloading the page.';
+
+		parentEl.appendChild(errorDiv);
+		elements.buttonEl.style.display = 'none';
 	}
 
 	init();

@@ -1,6 +1,7 @@
 import markLastElement from 'Models/markLastGridElement';
+import { breakpoints } from 'Models/breakpoints';
 
-// on resize niech sie nowy default gridu zmieni na 2//i ten event w gridzie, oraz case otwarcia na mobilu juz
+let currentView = null; // mobile | desktop
 
 export default function gridColumnControl (element) {
 	const elements = {
@@ -14,11 +15,13 @@ export default function gridColumnControl (element) {
 	};
 
 	function init () {
+		setGridColumn();
 		addListeners();
 		markLastElement(elements.gridContainer);
 	}
 
 	function addListeners () {
+		window.addEventListener('resize', setGridColumn);
 		elements.toggleButtons.forEach(button => {
 			button.addEventListener('click', toggleClickHandler);
 		});
@@ -55,6 +58,32 @@ export default function gridColumnControl (element) {
 		}
 
 		newActiveButton.classList.add(states.buttonActive);
+	}
+
+	function setGridColumn () {
+		const screenWidth = window.innerWidth;
+		const tabletLandscapeWidth = breakpoints['tablet-landscape'];
+		const newView = screenWidth >= tabletLandscapeWidth ? 'desktop' : 'mobile';
+
+		let gridClass = 'team__results__grid--2';
+
+		if (newView === 'desktop') {
+			gridClass = 'team__results__grid--5';
+		}
+
+		if (currentView !== newView) {
+			console.log(`View changed from ${currentView} to ${newView}`);
+			updateGridClass(gridClass);
+
+			const targetButton = Array.from(elements.toggleButtons).find(button => button.innerText === (newView === 'desktop' ? '5' : '2'));
+			if (targetButton) {
+				updateActiveButton(targetButton);
+			}
+
+			currentView = newView;
+
+			markLastElement(elements.gridContainer);
+		}
 	}
 
 	init();

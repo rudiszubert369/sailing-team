@@ -35,7 +35,7 @@ if(!function_exists('generate_module_team')){
 		//Template
 		?>
 
-		<section class="team" data-component='{"component": "load-content"}' data-url="<?= $url; ?>">
+		<section class="team" id="crew" data-component='{"component": "load-content"}' data-url="<?= $url; ?>">
 			<div class="team__inner" data-component='{"component": "grid-column-control"}'>
 				<div class="container team__top">
 					<div>
@@ -52,19 +52,19 @@ if(!function_exists('generate_module_team')){
 							'class' => 'team__subtitle color-light'
 						]); ?>
 					</div>
-					<div class="team__button-group--filter-control js-load-data__button-group">
+					<div class="team__button-group__filter-control js-load-content__button-group">
 						<?php echo generate_component_toggle_button_group($buttons_filters) ?>
 					</div>
 				</div>
 				<div class="container container--hd container--no-padding">
-					<div class="js-load-content__result team__results__grid team__results__grid--5"></div>
-					<div class="team__button-group--grid-control js-grid-column-control__button-group">
+					<div class="js-load-content__result team__results__grid"></div>
+					<div class="team__button-group__grid-control js-grid-column-control__button-group">
 						<?php echo generate_component_toggle_button_group($buttons_grid_options) ?>
 					</div>
 					<div class="team__button-container">
 						<?php echo generate_component_button([
 							'label' => 'Load more',
-							'class' => 'js-load-content__button--load-more',
+							'class' => 'js-load-content__button__load-more',
 							'style' => 'primary-white',
 						]) ?>
 					</div>
