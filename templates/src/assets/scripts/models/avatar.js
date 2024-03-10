@@ -1,67 +1,76 @@
 import generateImage from './image';
 
 /**
- * Generates an HTML picture element with specified images and attributes.
+ * Creates a div element with a specified class.
  *
- * This function dynamically creates a <picture> element containing an <img> element as a fallback.
- * It allows for the specification of a single image source or multiple responsive image sources
- * through media queries. It sets attributes for lazy loading and supports adding custom classes.
+ * @param {string} className - The class name to be added to the div.
+ * @returns {HTMLElement} The created div element with the class applied.
+ */
+function createDivWithClass (className) {
+	const div = document.createElement('div');
+	div.classList.add(className);
+	return div;
+}
+
+/**
+ * Creates an HTML element for displaying an avatar's name.
  *
- * @param {Object} data - The data object containing all necessary information to construct the picture element.
- * @param {Array.<{src: string, media?: string, width?: number}>} data.sources - An array of objects for image sources.
- * Each object can contain `src`, `width`, and optionally `media` properties. If `media` is provided, it will treat the source as responsive.
- * @param {string} [data.alt] - The alt text for the <img> element.
- * @param {string} [data.class] - Additional class(es) to add to the <img> element.
- * @returns {HTMLElement} The constructed <picture> element with child <source> elements (if responsive sources are provided) and an <img> element.
+ * @param {string} name - The name of the avatar.
+ * @returns {HTMLElement} The created h5 element with the avatar's name.
+ */
+function createNameElement (name) {
+	const nameElement = document.createElement('h5');
+	nameElement.classList.add('avatar__info__name', 'h5');
+	nameElement.textContent = name;
+	return nameElement;
+}
+
+/**
+ * Creates an HTML element for displaying an avatar's duties.
  *
- * @example
- * const imageEl = generateImage({
- *   alt: `Crew Member - ${avatar.name}`,
- *   class: 'crew__avatar__image',
- *   sources: [{
- *     src: avatar.image,
- *     width: 810,
- *   }],
- * });
- * document.body.appendChild(imageEl); // Append the generated <picture> element to the desired container
+ * @param {string} duties - The duties of the avatar.
+ * @returns {HTMLElement} The created p element with the avatar's duties.
+ */
+function createDutiesElement (duties) {
+	const dutiesElement = document.createElement('p');
+	dutiesElement.classList.add('avatar__info__duties');
+	dutiesElement.textContent = duties;
+	return dutiesElement;
+}
+
+/**
+ * Renders an avatar and appends it to the provided container element.
+ *
+ * @param {Object} avatar - The avatar data object.
+ * @param {HTMLElement} containerElement - The container to which the avatar element will be appended.
  */
 function renderAvatar (avatar, containerElement) {
-	const avatarElement = document.createElement('div');
-	avatarElement.classList.add('avatar');
-
-	const photoDiv = document.createElement('div');
-	photoDiv.classList.add('avatar__photo');
+	const avatarElement = createDivWithClass('avatar');
+	const photoDiv = createDivWithClass('avatar__photo');
+	const infoDiv = createDivWithClass('avatar__info');
 
 	const imageEl = generateImage({
 		alt: `Crew Member - ${avatar.name}`,
 		class: 'avatar__photo__image',
-		sources: [{
-			src: avatar.image,
-			width: 810,
-		}],
+		sources: [{ src: avatar.image, width: 810 }],
 	});
-
 	photoDiv.appendChild(imageEl);
+
+	infoDiv.appendChild(createNameElement(avatar.name));
+	infoDiv.appendChild(createDutiesElement(avatar.duties));
+
 	avatarElement.appendChild(photoDiv);
-
-	const infoDiv = document.createElement('div');
-	infoDiv.classList.add('avatar__info');
-
-	const nameH3 = document.createElement('h5');
-	nameH3.classList.add('avatar__info__name', 'h5');
-	nameH3.textContent = avatar.name;
-	infoDiv.appendChild(nameH3);
-
-	const dutiesP = document.createElement('p');
-	dutiesP.classList.add('avatar__info__duties');
-	dutiesP.textContent = avatar.duties;
-	infoDiv.appendChild(dutiesP);
-
 	avatarElement.appendChild(infoDiv);
 
 	containerElement.appendChild(avatarElement);
 }
 
+/**
+ * Generates avatars from the provided data array and appends them to the given container.
+ *
+ * @param {Array.<Object>} avatars - An array of avatar data objects.
+ * @param {HTMLElement} containerElement - The container to which the avatars will be appended.
+ */
 export default function generateAvatars (avatars, containerElement) {
 	avatars.forEach(avatar => {
 		renderAvatar(avatar, containerElement);

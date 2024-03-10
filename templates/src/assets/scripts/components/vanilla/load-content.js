@@ -1,50 +1,75 @@
 import { call } from 'Models/http-request';
 import { showPreloader, hidePreloader } from 'Models/preloader';
 import generateAvatars from 'Models/avatar';
-import markLastElement from 'Models/markLastGridElement';
+import markLastElement from 'Models/utils/mark-last-grid-element';
+import { updateActiveButton } from 'Models/utils/update-active-button';
 
-export const fetchData = async (baseUrl, currentPage, limit, currentFilter) => {
+/**
+ * This module is responsible for loading and displaying content dynamically based on pagination and filtering criteria.
+ * It handles user interactions for loading more content and toggling filters, updating the display accordingly.
+ *
+ * @module loadContent
+ */
+
+/**
+ * Constructs a URL for fetching data based on base URL, pagination, and filtering parameters.
+ *
+ * @param {string} baseUrl - The base URL for the data fetch request.
+ * @param {number} currentPage - The current page number for pagination.
+ * @param {number} limit - The number of items to fetch per page.
+ * @param {string} currentFilter - The current filter criterion (e.g., 'show all', 'trim', 'tactic', 'helmsman').
+ * @returns {string} The constructed URL with query parameters for fetching data.
+ */
+function constructFetchUrl (baseUrl, currentPage, limit, currentFilter) {
 	let url = `${baseUrl}?page=${currentPage}&limit=${limit}`;
 	if (currentFilter !== 'show all') {
 		url += `&duty=${currentFilter}`;
 	}
-	return call(url, 'GET', { Authorization: 'Bearer 0123456789' });
-};
+	return url;
+}
 
-let currentPage = 1;
-let currentFilter = 'show all'; // show-all | trim | tactic | helmsman
-const limit = 5;
-
-export function updateButtonVisibility (button, shouldBeVisible) {
+function updateButtonVisibility (button, shouldBeVisible) {
 	button.style.display = shouldBeVisible ? 'inline-block' : 'none';
 }
 
-export function updateActiveButton (currentlyActiveButton, newActiveButton, activeClass) {
-	if (currentlyActiveButton) {
-		currentlyActiveButton.classList.remove(activeClass);
-	}
-	newActiveButton.classList.add(activeClass);
-}
-
-export function clearResults (element) {
+function clearResults (element) {
 	element.innerHTML = '';
 }
 
+/**
+ * Fetches data from the server based on the provided parameters. Constructs the fetch URL using these parameters.
+ *
+ * @param {string} baseUrl - The base URL for the data fetch request.
+ * @param {number} currentPage - The current page of pagination.
+ * @param {number} limit - The limit of items to fetch.
+ * @param {string} currentFilter - The currently applied filter.
+ * @returns {Promise<Object>} A promise that resolves with the fetched data.
+ */
+const fetchData = async (baseUrl, currentPage, limit, currentFilter) => {
+	const url = constructFetchUrl(baseUrl, currentPage, limit, currentFilter);
+	return call(url, 'GET', { Authorization: 'Bearer 0123456789' });
+};
+
+/**
+ * Initializes and handles the content loading functionality for a given DOM element. This includes setting up
+ * event listeners for pagination and filter buttons, fetching the initial set of data, and updating the UI accordingly.
+ *
+ * @param {HTMLElement} element - The DOM element that serves as the root for the content loading functionality.
+ */
 export default function loadContent (element) {
+	let currentPage = 1;
+	let currentFilter = 'show all'; // show-all | trim | tactic | helmsman
+	const limit = 5;
 	const baseUrl = element.dataset.url || '';
 
 	const elements = {
 		buttonEl: element.querySelector('.js-load-content__button__load-more'),
 		toggleButtons: element.querySelectorAll('.js-load-content__button-group .button'),
+		buttonContainer: element.querySelector('.js-load-content__button-group'),
 		resultEl: element.querySelector('.js-load-content__result'),
 	};
 
-	const states = {
-		buttonActive: 'button--active',
-	};
-
 	async function init () {
-		console.log('loadContent init', element);
 		await loadAndDisplayData();
 		addListeners();
 	}
@@ -56,59 +81,67 @@ export default function loadContent (element) {
 		});
 	}
 
+	/**
+	 * Handles click events on toggle buttons, updating the current filter and reloading content based on the selected filter.
+	 */
 	async function toggleClickHandler () {
 		const buttonCategory = this.innerText.toLowerCase().trim();
-		if (buttonCategory !== currentFilter) {
-			const currentlyActiveButton = element.querySelector('.js-load-data__button-group .button--active');
-			if (currentlyActiveButton) {
-				currentlyActiveButton.classList.toggle(states.buttonActive);
-			}
-			this.classList.toggle(states.buttonActive);
 
-			elements.resultEl.innerHTML = '';
+		if (buttonCategory !== currentFilter) {
+			updateActiveButton(elements.buttonContainer, this);
+			clearResults(elements.resultEl);
 
 			currentFilter = buttonCategory;
 			currentPage = 1;
 
-			elements.buttonEl.style.display = 'inline-block';
-
+			updateButtonVisibility(elements.buttonEl, true);
 			loadAndDisplayData();
 		}
 	}
 
+	/**
+	 * Handles click events on the 'load more' button, incrementing the current page and fetching additional content accordingly.
+	 */
 	async function buttonClickHandler () {
 		currentPage++;
 		await loadAndDisplayData();
 	}
 
+	/**
+	 * Fetches and displays content based on the current page, limit, and filter settings. Shows a preloader during the fetch operation
+	 * and updates the visibility of the 'load more' button based on whether there is more content available.
+	 */
 	async function loadAndDisplayData () {
 		showPreloader(elements.buttonEl, { color: 'white' });
+
 		try {
 			const response = await fetchData(baseUrl, currentPage, limit, currentFilter);
-			console.log(response);
+
 			if (response.data && response.data.data.length > 0) {
 				generateAvatars(response.data.data, elements.resultEl);
 				markLastElement(elements.resultEl);
-				if (response.data.data.length < limit) {
-					elements.buttonEl.style.display = 'none';
-				}
-			} else {
-				elements.buttonEl.style.display = 'none';
 			}
+
+			updateButtonVisibility(elements.buttonEl, response.data.data.length >= limit);
 		} catch (error) {
-			handleError(elements.resultEl);
+			console.error(error);
+			handleError();
 		} finally {
 			hidePreloader(elements.buttonEl);
 		}
 	}
 
-	function handleError (parentEl) {
+	/**
+	 * Handles errors that occur during data fetch operations by displaying an error message to the user
+	 * and hiding the 'load more' button.
+	 */
+	function handleError () {
 		const errorDiv = document.createElement('div');
 		errorDiv.className = 'team__results--error';
 		errorDiv.textContent = 'Something went wrong ;( try reloading the page.';
 
-		parentEl.appendChild(errorDiv);
-		elements.buttonEl.style.display = 'none';
+		elements.resultEl.appendChild(errorDiv);
+		updateButtonVisibility(elements.buttonEl, false);
 	}
 
 	init();
