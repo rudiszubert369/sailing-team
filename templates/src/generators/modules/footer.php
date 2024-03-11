@@ -5,7 +5,7 @@ if(!function_exists('generate_module_footer')){
 		ob_start();
 
 		$links = [
-			['label' => 'About us', 'href'=> '#about'],
+			['label' => 'About us', 'href'=> '#'],
 			['label' => 'Impressum', 'href'=> '#'],
 			['label' => 'Gallery', 'href'=> '#'],
 			['label' => 'Datenschutz', 'href'=> '#'],
@@ -26,7 +26,7 @@ if(!function_exists('generate_module_footer')){
 				<p class="color-light">© 2023. Segel-Team. Alle Rechte vorbehalten</p>
 			</div>
 			<div class="footer__navigation">
-				<ul class="footer__navigation__links">
+				<ul class="footer__navigation__links container--small">
 					<?php foreach ($links as $link): ?>
 						<li>
 							<a class="footer__navigation__links__item color-light" href="<?php echo $link['href']; ?>">
@@ -35,7 +35,7 @@ if(!function_exists('generate_module_footer')){
 						</li>
 					<?php endforeach; ?>
 				</ul>
-				<ul class="footer__navigation__socials">
+				<ul class="footer__navigation__socials container--small">
 					<li class="footer__navigation__socials__item">
 						<a href="#">
 							<img class="footer__navigation__socials__item__image" alt="Facebook logo" src="/assets/icons/inline/facebook.svg">

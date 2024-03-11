@@ -44,13 +44,16 @@
 			background-color: $color-light;
 			border: 1px solid transparent;
 			color: $color-text-dark;
+			transition: all 1s;
 
 			.no-touch &:hover {
 				background-color: rgba($color-light, 0.8);
+				color: $color-text-primary;
 			}
 			.no-touch &:active {
 				background-color: rgba($color-light, 0.5);
 				color: $color-text-primary-dark;
+				color: $color-text-primary;
 			}
 			&.disabled,
 			&[disabled] {

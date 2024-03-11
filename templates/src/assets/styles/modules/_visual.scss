@@ -8,14 +8,14 @@
 	}
 
 	&__visual {
-		grid-column: 2 / span 3;
-		aspect-ratio: 1 / 1;
-		margin-right: -$page-padding-small;
+		grid-column: 6 / span 12;
+		aspect-ratio: 820 / 410;
+		margin-right: -$page-padding-big;
 		line-height: 0;
 
-		@include mq(tablet) {
-			margin-right: -$page-padding-big;
-			grid-column: 6 / span 12;
+		@include mq($until: tablet-landscape) {
+			margin-right: 0;
+			grid-column: 1 / span 12;
 			aspect-ratio: 820 / 410;
 		}
 

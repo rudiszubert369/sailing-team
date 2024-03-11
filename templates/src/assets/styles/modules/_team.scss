@@ -14,6 +14,11 @@
 	&__top {
 		display: flex;
 		justify-content: space-between;
+
+		@include mq($until: tablet-landscape) {
+			flex-direction: column;
+			gap: 50px;
+		}
 	}
 
 	&__headline {
@@ -22,10 +27,15 @@
 
 	&__button-group__filter-control{
 		align-self: flex-end;
+
+		@include mq($until: tablet-landscape) {
+			align-self: flex-start;
+		}
 		
 		.button {
 			color: $color-text-light;
-			padding-left: 29px!important;
+			padding-right: 29px!important;
+
 	  
 			&--active {
 			  color: $color-text-primary;
@@ -78,10 +88,14 @@
 		&__grid {
 			margin-top: 130px;
 			display: grid;
+
+			@include mq($until: tablet-landscape) {
+				margin-top: 60px;
+			}
 		  
 			@for $i from 1 through 6 {
 				&--#{$i} { 
-				grid-template-columns: repeat($i, 1fr); 
+					grid-template-columns: repeat($i, 1fr); 
 				}
 			}
 		}
@@ -89,6 +103,7 @@
 		&--error {
 			grid-column: 1 / -1;
 			color: $color-text-primary;
+			padding: 30px;
 			text-align: center;
 		}
 	}

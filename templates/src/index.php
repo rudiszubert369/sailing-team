@@ -2,8 +2,11 @@
 $root_path = $_SERVER['DOCUMENT_ROOT'];
 include($root_path . '/partials/head.php');
 
+// For static development purposes, it's using a hardcoded 'team_config' array here. For production
+// scenario, consult with the backend team to use getenv('API_URL') and getenv('API_TOKEN').
 $team_config = [
     'url' => 'https://challenge-api.view.agentur-loop.com/api/',
+	'token' => '0123456789',
 ];
 
 $moduleFunctions = [

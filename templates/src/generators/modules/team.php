@@ -2,6 +2,7 @@
 /*
 $data = [
 		'url' => '',
+		'token' => '',
 ];
 */
 if(!function_exists('generate_module_team')){
@@ -9,6 +10,7 @@ if(!function_exists('generate_module_team')){
 		// Settings
 		$data_defaults = [
 			'url' => null,
+			'token' => null,
 		];
 		
 		//Bootstrap
@@ -25,8 +27,7 @@ if(!function_exists('generate_module_team')){
 
 		$buttons_grid_options = [
 			['label'=> '1', 'active'=> false, 'mobile_only' => true],
-			['label'=> '2', 'active'=> false, 'mobile_only' => true],//TODO daj temu tez aktive i na inicie grid column control niech sprawdza czy jest mobiel czy desktop i w zaleznosi dodaje no i przy breakpoincie niech to jeszcze raz zrobi
-			['label'=> '3', 'active'=> false, 'mobile_only' => true],
+			['label'=> '2', 'active'=> false, 'mobile_only' => true],
 			['label'=> '4', 'active'=> false, 'mobile_only' => false],
 			['label'=> '5', 'active'=> true, 'mobile_only' => false],
 			['label'=> '6', 'active'=> false, 'mobile_only' => false],
@@ -35,9 +36,9 @@ if(!function_exists('generate_module_team')){
 		//Template
 		?>
 
-		<section class="team" id="crew" data-component='{"component": "load-content"}' data-url="<?= $url; ?>">
+		<section class="team" id="crew" data-component='{"component": "load-content"}' data-url="<?= $url; ?>" data-token="<?= $token; ?>">
 			<div class="team__inner" data-component='{"component": "grid-column-control"}'>
-				<div class="container team__top">
+				<div class="container container--hd team__top">
 					<div>
 						<?php echo generate_component_headline([
 								'label' => 'Unser team',

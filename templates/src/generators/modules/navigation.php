@@ -17,7 +17,7 @@ if(!function_exists('generate_module_navigation')){
 					<div class="navigation__main">
 						<ul class="navigation__links">
 							<li>
-								<a class="navigation__links__item label color-light" href="#about">About us</a>
+								<a class="navigation__links__item label color-light" href="#">About us</a>
 							</li>
 							<li>
 								<a class="navigation__links__item label color-light" href="#">Gallery</a>

@@ -37,17 +37,22 @@ function clearResults (element) {
 }
 
 /**
- * Fetches data from the server based on the provided parameters. Constructs the fetch URL using these parameters.
+ * Initializes and handles the content loading functionality for a given DOM element. This includes setting up
+ * event listeners for pagination and filter buttons, fetching the initial set of data, and updating the UI accordingly.
+ *
+ * The `baseUrl`, and `authToken` are derived from the `data-url` and `data-token` attributes of the provided element,
+ * acting as the endpoint and authorization token for fetching the data.
  *
  * @param {string} baseUrl - The base URL for the data fetch request.
  * @param {number} currentPage - The current page of pagination.
  * @param {number} limit - The limit of items to fetch.
  * @param {string} currentFilter - The currently applied filter.
+ * @param {string} authToken - The authentication token to use for the fetch request.
  * @returns {Promise<Object>} A promise that resolves with the fetched data.
  */
-const fetchData = async (baseUrl, currentPage, limit, currentFilter) => {
+const fetchData = async (baseUrl, currentPage, limit, currentFilter, authToken) => {
 	const url = constructFetchUrl(baseUrl, currentPage, limit, currentFilter);
-	return call(url, 'GET', { Authorization: 'Bearer 0123456789' });
+	return call(url, 'GET', { Authorization: `Bearer ${authToken}` });
 };
 
 /**
@@ -61,6 +66,7 @@ export default function loadContent (element) {
 	let currentFilter = 'show all'; // show-all | trim | tactic | helmsman
 	const limit = 5;
 	const baseUrl = element.dataset.url || '';
+	const authToken = element.dataset.token || '';
 
 	const elements = {
 		buttonEl: element.querySelector('.js-load-content__button__load-more'),
@@ -115,7 +121,7 @@ export default function loadContent (element) {
 		showPreloader(elements.buttonEl, { color: 'white' });
 
 		try {
-			const response = await fetchData(baseUrl, currentPage, limit, currentFilter);
+			const response = await fetchData(baseUrl, currentPage, limit, currentFilter, authToken);
 
 			if (response.data && response.data.data.length > 0) {
 				generateAvatars(response.data.data, elements.resultEl);
