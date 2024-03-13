@@ -15,6 +15,10 @@
 		@include mq(tablet) {
 			padding: 120px 0;
 		}
+
+		@include mq(laptop) {
+			clip-path: polygon(100% 0, 100% 93%, 50% 100%, 0 93%, 0 0);
+		}
 	}
 
 	&__visual {
@@ -36,6 +40,10 @@
 
 		&__content {
 			@include grid;
+
+			@include mq(page) {
+				row-gap: 24px;
+			}
 		}
 	}
 
@@ -45,6 +53,10 @@
 		@include mq(tablet-landscape) {
 			grid-column: 1 / span 6;
 		}
+
+		@include mq(page) {
+			font-size: 92px;
+		}
 	}
 
 	&__text {
@@ -52,6 +64,10 @@
 
 		@include mq(tablet-landscape) {
 			grid-column: 1 / span 4;
+		}
+
+		@include mq(page) {
+			font-size: 22px;
 		}
 	}
 
@@ -81,7 +97,11 @@
 
 			&:last-child {
 				grid-column: span 2;
-				padding-left: 56px;
+
+				@include mq(tablet-landscape) {
+					padding-left: 56px;
+					padding-top: 170px;
+				}
 			}
 
 			&__text {

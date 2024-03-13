@@ -1,14 +1,13 @@
 import generateImage from './image';
 
 /**
- * Creates a div element with a specified class.
- *
  * @param {string} className - The class name to be added to the div.
  * @returns {HTMLElement} The created div element with the class applied.
  */
 function createDivWithClass (className) {
 	const div = document.createElement('div');
 	div.classList.add(className);
+
 	return div;
 }
 
@@ -22,6 +21,7 @@ function createNameElement (name) {
 	const nameElement = document.createElement('h5');
 	nameElement.classList.add('avatar__info__name', 'h5');
 	nameElement.textContent = name;
+
 	return nameElement;
 }
 
@@ -35,16 +35,17 @@ function createDutiesElement (duties) {
 	const dutiesElement = document.createElement('p');
 	dutiesElement.classList.add('avatar__info__duties');
 	dutiesElement.textContent = duties;
+
 	return dutiesElement;
 }
 
 /**
- * Renders an avatar and appends it to the provided container element.
+ * Renders an avatar and returns the constructed DOM element.
  *
- * @param {Object} avatar - The avatar data object.
- * @param {HTMLElement} containerElement - The container to which the avatar element will be appended.
+ * @param {Object} avatar - The avatar data object containing the avatar's properties.
+ * @returns {HTMLElement} The constructed avatar element ready to be inserted into the document.
  */
-function renderAvatar (avatar, containerElement) {
+function renderAvatar (avatar) {
 	const avatarElement = createDivWithClass('avatar');
 	const photoDiv = createDivWithClass('avatar__photo');
 	const infoDiv = createDivWithClass('avatar__info');
@@ -62,17 +63,29 @@ function renderAvatar (avatar, containerElement) {
 	avatarElement.appendChild(photoDiv);
 	avatarElement.appendChild(infoDiv);
 
-	containerElement.appendChild(avatarElement);
+	return avatarElement;
 }
 
 /**
  * Generates avatars from the provided data array and appends them to the given container.
+ * RequestAnimationFrame is used for fade in effect.
  *
  * @param {Array.<Object>} avatars - An array of avatar data objects.
  * @param {HTMLElement} containerElement - The container to which the avatars will be appended.
  */
 export default function generateAvatars (avatars, containerElement) {
+	const fragment = document.createDocumentFragment();
+
 	avatars.forEach(avatar => {
-		renderAvatar(avatar, containerElement);
+		const avatarElement = renderAvatar(avatar);
+		fragment.appendChild(avatarElement);
+	});
+
+	containerElement.appendChild(fragment);
+
+	requestAnimationFrame(() => {
+		containerElement.querySelectorAll('.avatar').forEach(element => {
+			element.classList.add('avatar--visible');
+		});
 	});
 }

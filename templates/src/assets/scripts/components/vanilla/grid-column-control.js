@@ -6,7 +6,7 @@ import { updateActiveButton } from 'Models/utils/update-active-button';
 /**
  * Controls the grid column layout and active button state within a specified element.
  * It initializes the grid layout based on the current screen width, sets up event listeners
- * for window resize and button clicks to adjust the layout and active states dynamically.
+ * for window resize and button clicks.
  *
  * @param {HTMLElement} element - The root element that contains the grid and toggle buttons.
  */
@@ -57,7 +57,10 @@ export default function gridColumnControl (element) {
 		if (currentView !== newView) {
 			updateGridClass(elements.gridContainer, states.gridElementClassPattern, gridClass);
 			const targetButton = findTargetButton(newView);
-			if (targetButton) updateActiveButton(elements.buttonContainer, targetButton);
+
+			if (targetButton) {
+				updateActiveButton(elements.buttonContainer, targetButton);
+			}
 
 			currentView = newView;
 			markLastElement(elements.gridContainer);
@@ -68,7 +71,7 @@ export default function gridColumnControl (element) {
      * Determines the appropriate grid class based on the current screen width.
      * Used initially and on window resize to set the grid layout.
 	 *
-     * @param {number} screenWidth - The current width of the screen.
+     * @param {number} screenWidth
      * @returns {string} The class name for the current grid layout.
      */
 	function determineGridClass (screenWidth) {

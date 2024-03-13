@@ -6,26 +6,24 @@ import { updateActiveButton } from 'Models/utils/update-active-button';
 
 /**
  * This module is responsible for loading and displaying content dynamically based on pagination and filtering criteria.
- * It handles user interactions for loading more content and toggling filters, updating the display accordingly.
+ * It handles user interactions for loading more content and toggling filters.
  *
- * @module loadContent
+ * @module membersLoader
  */
 
 /**
  * Constructs a URL for fetching data based on base URL, pagination, and filtering parameters.
  *
- * @param {string} baseUrl - The base URL for the data fetch request.
- * @param {number} currentPage - The current page number for pagination.
+ * @param {string} baseUrl
+ * @param {number} currentPage
  * @param {number} limit - The number of items to fetch per page.
- * @param {string} currentFilter - The current filter criterion (e.g., 'show all', 'trim', 'tactic', 'helmsman').
+ * @param {string} currentFilter - The current filter criterion ('show all' | 'trim' | 'tactic'| 'helmsman').
  * @returns {string} The constructed URL with query parameters for fetching data.
  */
 function constructFetchUrl (baseUrl, currentPage, limit, currentFilter) {
-	let url = `${baseUrl}?page=${currentPage}&limit=${limit}`;
-	if (currentFilter !== 'show all') {
-		url += `&duty=${currentFilter}`;
-	}
-	return url;
+	const filter = currentFilter !== 'show all' ? `&duty=${currentFilter}` : '';
+
+	return `${baseUrl}?page=${currentPage}&limit=${limit}${filter}`;
 }
 
 function updateButtonVisibility (button, shouldBeVisible) {
@@ -37,21 +35,16 @@ function clearResults (element) {
 }
 
 /**
- * Initializes and handles the content loading functionality for a given DOM element. This includes setting up
- * event listeners for pagination and filter buttons, fetching the initial set of data, and updating the UI accordingly.
- *
- * The `baseUrl`, and `authToken` are derived from the `data-url` and `data-token` attributes of the provided element,
- * acting as the endpoint and authorization token for fetching the data.
- *
- * @param {string} baseUrl - The base URL for the data fetch request.
- * @param {number} currentPage - The current page of pagination.
+ * @param {string} baseUrl
+ * @param {number} currentPage
  * @param {number} limit - The limit of items to fetch.
  * @param {string} currentFilter - The currently applied filter.
- * @param {string} authToken - The authentication token to use for the fetch request.
- * @returns {Promise<Object>} A promise that resolves with the fetched data.
+ * @param {string} authToken
+ * @returns {Promise<Object>}
  */
 const fetchData = async (baseUrl, currentPage, limit, currentFilter, authToken) => {
 	const url = constructFetchUrl(baseUrl, currentPage, limit, currentFilter);
+
 	return call(url, 'GET', { Authorization: `Bearer ${authToken}` });
 };
 
@@ -61,18 +54,21 @@ const fetchData = async (baseUrl, currentPage, limit, currentFilter, authToken) 
  *
  * @param {HTMLElement} element - The DOM element that serves as the root for the content loading functionality.
  */
-export default function loadContent (element) {
-	let currentPage = 1;
-	let currentFilter = 'show all'; // show-all | trim | tactic | helmsman
+export default function membersLoader (element) {
 	const limit = 5;
 	const baseUrl = element.dataset.url || '';
 	const authToken = element.dataset.token || '';
 
+	const state = {
+		currentPage: 1,
+		currentFilter: 'show all', // show-all | trim | tactic | helmsman
+	};
+
 	const elements = {
-		buttonEl: element.querySelector('.js-load-content__button__load-more'),
-		toggleButtons: element.querySelectorAll('.js-load-content__button-group .button'),
-		buttonContainer: element.querySelector('.js-load-content__button-group'),
-		resultEl: element.querySelector('.js-load-content__result'),
+		buttonEl: element.querySelector('.js-members-loader__button__load-more'),
+		toggleButtons: element.querySelectorAll('.js-members-loader__button-group .button'),
+		buttonContainer: element.querySelector('.js-members-loader__button-group'),
+		resultEl: element.querySelector('.js-members-loader__result'),
 	};
 
 	async function init () {
@@ -93,12 +89,12 @@ export default function loadContent (element) {
 	async function toggleClickHandler () {
 		const buttonCategory = this.innerText.toLowerCase().trim();
 
-		if (buttonCategory !== currentFilter) {
+		if (buttonCategory !== state.currentFilter) {
 			updateActiveButton(elements.buttonContainer, this);
 			clearResults(elements.resultEl);
 
-			currentFilter = buttonCategory;
-			currentPage = 1;
+			state.currentFilter = buttonCategory;
+			state.currentPage = 1;
 
 			updateButtonVisibility(elements.buttonEl, true);
 			loadAndDisplayData();
@@ -109,7 +105,7 @@ export default function loadContent (element) {
 	 * Handles click events on the 'load more' button, incrementing the current page and fetching additional content accordingly.
 	 */
 	async function buttonClickHandler () {
-		currentPage++;
+		state.currentPage++;
 		await loadAndDisplayData();
 	}
 
@@ -118,10 +114,10 @@ export default function loadContent (element) {
 	 * and updates the visibility of the 'load more' button based on whether there is more content available.
 	 */
 	async function loadAndDisplayData () {
-		showPreloader(elements.buttonEl, { color: 'white' });
+		showPreloader(elements.buttonEl, { color: 'color-primary' });
 
 		try {
-			const response = await fetchData(baseUrl, currentPage, limit, currentFilter, authToken);
+			const response = await fetchData(baseUrl, state.currentPage, limit, state.currentFilter, authToken);
 
 			if (response.data && response.data.data.length > 0) {
 				generateAvatars(response.data.data, elements.resultEl);

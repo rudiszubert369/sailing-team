@@ -4,7 +4,7 @@
 	min-height: 445px;
 
 	@include mq($until: tablet-landscape) {
-		flex-direction: column;
+		flex-direction: column-reverse;
 	}
 
 	&__logo-container {
@@ -82,7 +82,7 @@
 
 			@include mq($until: tablet-landscape) {
 				width: 80%;
-				justify-content: center;
+				justify-content: flex-start;
 				margin-top: 50px;
 			}
 

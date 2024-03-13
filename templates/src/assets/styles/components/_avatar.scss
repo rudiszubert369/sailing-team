@@ -1,5 +1,7 @@
 .avatar {
 	position: relative;
+	opacity: 0;
+	transition: opacity 1s ease-in-out;
 
 	@include mq($until: tablet-landscape) {
 		display: flex;
@@ -29,6 +31,10 @@
 		-webkit-filter: none;
 		filter: none;
 	}
+
+	&--visible {
+        opacity: 1;
+    }
 
 	&__photo {
 		position: relative;
