@@ -1,5 +1,3 @@
-import generateImage from './image';
-
 /**
  * @param {string} className - The class name to be added to the div.
  * @returns {HTMLElement} The created div element with the class applied.
@@ -40,6 +38,24 @@ function createDutiesElement (duties) {
 }
 
 /**
+ * Creates an <img> element for the avatar.
+ *
+ * @param {string} src - The source URL of the image.
+ * @param {string} alt - The alt text for the image.
+ * @param {string} className - Additional class(es) for the image.
+ * @returns {HTMLElement} The created <img> element.
+ */
+function createImageElement (src, alt, className) {
+	const img = document.createElement('img');
+	img.src = src;
+	img.alt = alt;
+	img.className = className;
+	img.loading = 'lazy';
+
+	return img;
+}
+
+/**
  * Renders an avatar and returns the constructed DOM element.
  *
  * @param {Object} avatar - The avatar data object containing the avatar's properties.
@@ -49,12 +65,8 @@ function renderAvatar (avatar) {
 	const avatarElement = createDivWithClass('avatar');
 	const photoDiv = createDivWithClass('avatar__photo');
 	const infoDiv = createDivWithClass('avatar__info');
+	const imageEl = createImageElement(avatar.image, `Crew Member - ${avatar.name}`, 'avatar__photo__image');
 
-	const imageEl = generateImage({
-		alt: `Crew Member - ${avatar.name}`,
-		class: 'avatar__photo__image',
-		sources: [{ src: avatar.image, width: 810 }],
-	});
 	photoDiv.appendChild(imageEl);
 
 	infoDiv.appendChild(createNameElement(avatar.name));

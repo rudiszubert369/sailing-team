@@ -1,7 +1,5 @@
 
-# Segel Team 
-
-[[toc]]
+# Segel Team
 
 ## Dependencies
 
